@@ -1,0 +1,23 @@
+/* Basic animations & small overrides (Tailwind used for main layout) */
+
+/* Ensure canvas covers hero area */
+#particles { width: 100%; height: 100%; display: block; }
+
+/* Three.js canvas sizing */
+#threeCanvas { width: 100%; height: 420px; display: block; }
+
+/* Swiper overrides for nicer controls */
+.swiper-button-prev, .swiper-button-next { color: #9fb6ff; }
+.swiper-pagination-bullet { background: rgba(255,255,255,0.6); opacity: 0.9; }
+
+/* Simple keyframes used by JS (if needed) */
+@keyframes fadeInUp {
+  from { opacity: 0; transform: translateY(18px); }
+  to { opacity: 1; transform: translateY(0); }
+}
+
+/* small responsive tweak */
+@media (max-width: 640px) {
+  header { padding-top: 60px; }
+  #heroTitle { font-size: 1.85rem; }
+}

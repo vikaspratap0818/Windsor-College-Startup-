@@ -1,0 +1,255 @@
+<!DOCTYPE html>
+<html lang="en" class="dark">
+<head>
+  <meta charset="utf-8" />
+  <meta name="viewport" content="width=device-width,initial-scale=1" />
+  <title>Windsor EV Charging</title>
+
+  <!-- Tailwind (CDN) -->
+  <script src="https://cdn.tailwindcss.com"></script>
+
+  <!-- External CSS for map & slider -->
+  <link rel="stylesheet" href="https://unpkg.com/leaflet@1.9.4/dist/leaflet.css" />
+  <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/swiper@11/swiper-bundle.min.css" />
+
+  <!-- Custom CSS -->
+  <link rel="stylesheet" href="style.css" />
+</head>
+<body class="bg-gray-950 text-white overflow-x-hidden">
+
+  <!-- NAVBAR -->
+  <nav class="fixed top-0 w-full bg-gray-900/80 backdrop-blur-lg z-50 px-8 py-4 flex justify-between items-center">
+    <div class="flex items-center gap-3">
+      <img src="Logo.png" alt="logo" class="w-8 h-8"/>
+      <h1 class="text-2xl font-bold text-blue-400">Windsor</h1>
+    </div>
+
+    <ul id="menu" class="hidden md:flex gap-8 text-lg">
+      <li><a href="#features" class="hover:text-blue-400 transition">Features</a></li>
+      <li><a href="#pricing" class="hover:text-blue-400 transition">Pricing</a></li>
+      <li><a href="#map" class="hover:text-blue-400 transition">Stations</a></li>
+      <li><a href="#contact" class="hover:text-blue-400 transition">Contact</a></li>
+    </ul>
+
+    <div class="flex items-center gap-4">
+      <button id="themeToggle" class="text-xl">🌙</button>
+      <button class="md:hidden" id="hamburgerBtn" aria-label="menu">
+        <div class="w-6 h-0.5 bg-white my-1"></div>
+        <div class="w-6 h-0.5 bg-white my-1"></div>
+        <div class="w-6 h-0.5 bg-white my-1"></div>
+      </button>
+    </div>
+  </nav>
+
+  <!-- HERO -->
+  <header class="h-screen flex flex-col justify-center items-center text-center px-6 relative pt-16">
+    <!-- Particles canvas -->
+    <canvas id="particles" class="absolute inset-0 -z-10"></canvas>
+
+    <h1 id="heroTitle" class="text-4xl md:text-6xl font-extrabold mb-6 opacity-0">Fast, Smart & Reliable EV Charging</h1>
+    <p id="heroSubtitle" class="text-lg md:text-xl max-w-2xl opacity-0">Experience the future of charging with Windsor’s intelligent infrastructure.</p>
+    <a id="heroBtn" href="#download" class="mt-8 bg-blue-600 hover:bg-blue-700 px-8 py-3 rounded-xl text-lg font-medium shadow-xl transition opacity-0">Download App</a>
+  </header>
+
+  <!-- FEATURES -->
+  <section id="features" class="py-20 px-8">
+    <h2 class="text-3xl md:text-4xl font-bold text-center mb-10">Key Features</h2>
+    <div class="grid md:grid-cols-2 lg:grid-cols-4 gap-8 max-w-6xl mx-auto">
+      <div class="p-6 bg-gray-900 rounded-2xl shadow-xl transform hover:-translate-y-2 transition">
+        <h3 class="text-xl mb-2">⚡ Ultra-Fast Charging</h3>
+        <p>Charge 4× faster with next-gen technology.</p>
+      </div>
+      <div class="p-6 bg-gray-900 rounded-2xl shadow-xl transform hover:-translate-y-2 transition">
+        <h3 class="text-xl mb-2">📍 Real-Time Locator</h3>
+        <p>Find stations with live availability and instant navigation.</p>
+      </div>
+      <div class="p-6 bg-gray-900 rounded-2xl shadow-xl transform hover:-translate-y-2 transition">
+        <h3 class="text-xl mb-2">💳 One-Tap Payments</h3>
+        <p>Seamless and secure in-app payments.</p>
+      </div>
+      <div class="p-6 bg-gray-900 rounded-2xl shadow-xl transform hover:-translate-y-2 transition">
+        <h3 class="text-xl mb-2">🔋 Smart Energy Management</h3>
+        <p>AI-powered load balancing for efficiency.</p>
+      </div>
+    </div>
+  </section>
+
+  <!-- 3D CHARGER MODEL -->
+  <section class="py-16 px-8 text-center">
+    <h2 class="text-3xl md:text-4xl font-bold mb-8">3D Charger Preview</h2>
+    <canvas id="threeCanvas" class="w-full max-w-4xl mx-auto h-[420px] rounded-2xl shadow-xl bg-transparent"></canvas>
+  </section>
+
+  <!-- MAP -->
+  <section id="map" class="py-16 px-8 bg-gray-900">
+    <h2 class="text-3xl md:text-4xl font-bold text-center mb-8">Live EV Station Map Demo</h2>
+    <div id="mapContainer" class="max-w-6xl mx-auto">
+      <div id="map" class="w-full h-[420px] rounded-2xl shadow-xl"></div>
+    </div>
+  </section>
+
+  <!-- APP PREVIEW (Swiper) -->
+  <section id="appPreview" class="py-16 px-8 text-center">
+    <h2 class="text-3xl md:text-4xl font-bold mb-8">App Preview</h2>
+    <div class="max-w-3xl mx-auto">
+      <div class="swiper">
+        <div class="swiper-wrapper">
+          <div class="swiper-slide"><img src="https://via.placeholder.com/300x600/071225/ffffff?text=Screen+1" class="mx-auto rounded-2xl shadow-xl" alt="screen1"></div>
+          <div class="swiper-slide"><img src="https://via.placeholder.com/300x600/071225/ffffff?text=Screen+2" class="mx-auto rounded-2xl shadow-xl" alt="screen2"></div>
+          <div class="swiper-slide"><img src="https://via.placeholder.com/300x600/071225/ffffff?text=Screen+3" class="mx-auto rounded-2xl shadow-xl" alt="screen3"></div>
+        </div>
+        <!-- pagination/buttons -->
+        <div class="swiper-pagination mt-6"></div>
+        <div class="swiper-button-prev"></div>
+        <div class="swiper-button-next"></div>
+      </div>
+    </div>
+  </section>
+
+  <!-- PRICING -->
+  <section id="pricing" class="py-16 px-8">
+    <h2 class="text-3xl md:text-4xl font-bold text-center mb-8">Pricing</h2>
+    <div class="flex flex-wrap justify-center gap-8">
+      <div class="bg-gray-800 p-8 rounded-2xl w-80 shadow-xl border border-gray-700">
+        <h3 class="text-2xl text-blue-400 mb-3">Public Charging</h3>
+        <p class="text-lg">₹300 per fast-charging session.</p>
+      </div>
+      <div class="bg-gray-800 p-8 rounded-2xl w-80 shadow-xl border border-gray-700">
+        <h3 class="text-2xl text-blue-400 mb-3">Commercial Installations</h3>
+        <p class="text-lg">₹12–₹15 per kWh for partners.</p>
+      </div>
+    </div>
+  </section>
+
+  <!-- CONTACT -->
+  <section id="contact" class="py-16 px-8">
+    <h2 class="text-3xl md:text-4xl font-bold text-center mb-8">Contact Us</h2>
+    <form class="max-w-xl mx-auto space-y-4">
+      <input type="text" placeholder="Your Name" class="w-full p-4 rounded-xl bg-gray-800 border border-gray-700" required />
+      <input type="email" placeholder="Email Address" class="w-full p-4 rounded-xl bg-gray-800 border border-gray-700" required />
+      <textarea placeholder="Message" rows="5" class="w-full p-4 rounded-xl bg-gray-800 border border-gray-700"></textarea>
+      <button type="submit" class="w-full bg-blue-600 hover:bg-blue-700 p-4 rounded-xl">Send Message</button>
+    </form>
+  </section>
+
+  <!-- DOWNLOAD -->
+  <section id="download" class="py-16 px-8 text-center">
+    <h2 class="text-3xl md:text-4xl font-bold mb-6">Get the App</h2>
+    <div class="flex justify-center gap-6">
+      <a class="bg-blue-600 px-6 py-3 rounded-xl">Google Play</a>
+      <a class="bg-blue-600 px-6 py-3 rounded-xl">App Store</a>
+    </div>
+  </section>
+
+  <!-- ADVANCED FOOTER -->
+  <footer class="bg-gray-950 text-gray-300 py-16 border-t border-gray-800">
+    <div class="max-w-7xl mx-auto px-8 grid md:grid-cols-4 gap-12">
+      <div>
+        <h2 class="text-2xl font-bold text-blue-400 mb-3">Windsor</h2>
+        <p class="text-gray-400">Powering the future of EV charging with smart, reliable, AI-driven infrastructure.</p>
+        <div class="flex gap-4 mt-6 text-2xl">
+          <a aria-label="website" class="hover:text-blue-400">🌐</a>
+          <a aria-label="twitter" class="hover:text-blue-400">🐦</a>
+          <a aria-label="instagram" class="hover:text-blue-400">📸</a>
+          <a aria-label="linkedin" class="hover:text-blue-400">💼</a>
+        </div>
+      </div>
+
+      <div>
+        <h3 class="text-lg font-semibold mb-4">Quick Links</h3>
+        <ul class="space-y-2">
+          <li><a href="#features" class="hover:text-blue-400">Features</a></li>
+          <li><a href="#pricing" class="hover:text-blue-400">Pricing</a></li>
+          <li><a href="#map" class="hover:text-blue-400">Station Map</a></li>
+          <li><a href="#download" class="hover:text-blue-400">Download App</a></li>
+        </ul>
+      </div>
+
+      <div>
+        <h3 class="text-lg font-semibold mb-4">Support</h3>
+        <ul class="space-y-2">
+          <li><a class="hover:text-blue-400">Help Center</a></li>
+          <li><a class="hover:text-blue-400">Customer Care</a></li>
+          <li><a class="hover:text-blue-400">Report Issue</a></li>
+          <li><a class="hover:text-blue-400">Charger Installation</a></li>
+        </ul>
+      </div>
+
+      <div>
+        <h3 class="text-lg font-semibold mb-4">Stay Updated</h3>
+        <p class="text-gray-400 mb-4">Subscribe to get updates on new chargers, offers, and EV insights.</p>
+        <div class="flex gap-2">
+          <input id="newsletterEmail" type="email" placeholder="Email address" class="p-3 w-full rounded-xl bg-gray-800 border border-gray-700" />
+          <button id="newsletterBtn" class="bg-blue-600 hover:bg-blue-700 px-4 rounded-xl">→</button>
+        </div>
+      </div>
+    </div>
+
+    <p class="text-center text-gray-500 mt-12">© 2025 Windsor EV Charging · All Rights Reserved</p>
+  </footer>
+
+  <!-- LIBRARIES -->
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/gsap/3.12.2/gsap.min.js"></script>
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/three.js/r128/three.min.js"></script>
+  <script src="https://unpkg.com/leaflet@1.9.4/dist/leaflet.js"></script>
+  <script src="https://cdn.jsdelivr.net/npm/swiper@11/swiper-bundle.min.js"></script>
+  <script src="https://cdn.jsdelivr.net/npm/three@0.152.0/examples/js/loaders/GLTFLoader.js"></script>
+  <div id="ev-charger-container" class="w-full h-[500px] bg-gray-100 rounded-xl shadow-lg"></div>
+   <script>
+  // Scene setup
+  const container = document.getElementById('ev-charger-container');
+  const scene = new THREE.Scene();
+  const camera = new THREE.PerspectiveCamera(45, container.clientWidth / container.clientHeight, 0.1, 1000);
+  camera.position.set(0, 1.5, 3);
+
+  const renderer = new THREE.WebGLRenderer({ antialias: true, alpha: true });
+  renderer.setSize(container.clientWidth, container.clientHeight);
+  container.appendChild(renderer.domElement);
+
+  // Lighting
+  const ambientLight = new THREE.AmbientLight(0xffffff, 0.6);
+  scene.add(ambientLight);
+
+  const directionalLight = new THREE.DirectionalLight(0xffffff, 0.8);
+  directionalLight.position.set(5, 10, 7.5);
+  scene.add(directionalLight);
+
+  // Load 3D Model (GLTF/GLB)
+  const loader = new THREE.GLTFLoader();
+  loader.load(
+    'https://models.babylonjs.com/EVCharger/EVCharger.glb', // Replace with your 3D model URL
+    function (gltf) {
+      const model = gltf.scene;
+      model.scale.set(1.2, 1.2, 1.2);
+      scene.add(model);
+    },
+    undefined,
+    function (error) {
+      console.error(error);
+    }
+  );
+
+  // Orbit controls (optional, for user rotation)
+  const controls = new THREE.OrbitControls(camera, renderer.domElement);
+  controls.enableDamping = true;
+
+  // Responsive
+  window.addEventListener('resize', () => {
+    camera.aspect = container.clientWidth / container.clientHeight;
+    camera.updateProjectionMatrix();
+    renderer.setSize(container.clientWidth, container.clientHeight);
+  });
+
+  // Animation loop
+  function animate() {
+    requestAnimationFrame(animate);
+    controls.update();
+    renderer.render(scene, camera);
+  }
+  animate();
+</script>
+
+  <!-- Custom script -->
+  <script src="script.js"></script>
+</body>
+</html>
